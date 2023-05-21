@@ -25,6 +25,7 @@ int main(int arg1, int arg2, int arg3) {
 
 ## Type of Attacks
 - Buffer Overflow
+- Memory Exploits
 
 ### Buffer Overflow
 - Overflowing the buffer to maliciously input code for execution
@@ -65,3 +66,49 @@ int main() {
 #### Factors
 - Finding the return address is not an easy feat
   - We can increase the chances by using NOP sleds
+
+### Memory Exploits
+
+#### Techniques
+- Format String Vulnerabilities
+```c
+void safe() {
+    char buf[80];
+    if (fgets(buf, sizeof(buf), stdin) == NULL) return;
+    printf("%s", buf); // Format specifiers will be printed as string
+}
+
+void vulnerable() {
+    char buf[80];
+    if (fgets(buf, sizeof(buf), stdin) == NULL) return;
+    printf(buf); // Format specifiers in buffer can be utilised as a loophole for attack
+}
+```
+
+#### Tools
+- GNU Debugger
+```shell
+  # Opens up a listener and lets you see what is inside the program
+  gdb `pgrep wisdom-alt.c`
+  
+  # Add a breakpoint at line 92 of the source code `wisdom-alt.c`
+  break wisdom-alt.c:92
+  
+  # Continues to resume normal execution
+  continue
+  cont
+  c
+  
+  # Move to next line of code
+  next
+  
+  # List all breakpoints
+  info break
+  
+  # Delete breakpoint
+  del 1
+  
+  # Print
+  print r # Values
+  print &r # Memory address
+```
