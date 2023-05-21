@@ -47,6 +47,21 @@ int main() {
 }
 ```
 
+#### Techniques
+- Stack Smashing
+- Heap Overflow
+- Read Overflow
+- Stale Memory
+
+##### Read Overflow
+- Heartbleed
+  - Using the `heartbeat` function to identify that the SSL connection is still open
+  - Even though the code has limited the buffer size, it did not verify the length was accurate
+
+##### Stale Memory
+- Pointer is freed but program is still using it
+- Attacker can arrange for the freed memory to be re-allocated to access attacker-controlled data
+
 #### Factors
 - Finding the return address is not an easy feat
   - We can increase the chances by using NOP sleds
