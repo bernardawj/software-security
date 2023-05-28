@@ -135,8 +135,87 @@ p = 5;
 - We can detect `stack smashing` through the concept of `stack canary`
   - We can place a `stack canary` (something like a password salt) after the buffer, then cross-compare it if the values are the same
     - If attackers overrun the buffer, it will be replaced with values that are different from the initial salt
-    - ![image](https://github.com/bernardawj/software-security/assets/19328469/fd447e79-f78b-422f-9922-7b9ff67fc598)
+    ![image](https://github.com/bernardawj/software-security/assets/19328469/fd447e79-f78b-422f-9922-7b9ff67fc598)
 
+### Secure Coding
+- **Principle** is a design goal with many possible outcomes
+  - Validating your inputs
+- **Rule** is a specific practice that adheres to sound design principles
+  - Enforce input compliance
+  - Use safe string functions
+  - Don't forget NUL terminator
+
+#### Example: Enforce input compliance
+```c
+int main() {
+	char buf[100], *p;
+	int i, len;
+	while (1) {
+		p = fgets(buf, sizeof(buf), stdin);
+		if (p == NULL) return 0;
+		len = atoi(p);
+		p = fgets(buf, sizeof(buf), stdin);
+		if (p == NULL) return 0;
+		// `len` may exceed actual message length, so we will need to validate
+		// if it exceeds then it is a buffer overflow attack
+		// we can sanitize the input (line 13) to be compliant to the rule
+		len = MIN(ln, strlen(buf));
+		for (i = 0; i < len; i++) {
+			if (!iscntrl(buf[i])) putchar(buf[i]);
+			else putchar('.');
+		}
+		printf("\n");
+	}
+}
+```
+```c
+// Possible overflow if integer value is more than the array size
+char unsafe_digit_to_char(int i) {
+	char convert[] = "0123456789";
+	return convert[i];
+}
+
+// Sanitize input
+char safe_digit_to_char(int i) {
+	char convert[] = "0123456789";
+	if (i < 0 || i > 9) {
+		return '?';
+	}
+	return convert[i];
+}
+```
+
+#### Example: Use safe string functions
+```c
+void traditional_unsafe() {
+	char str[4];
+	char buf[10] = "fine";
+	strcpy(str, "hello"); // Overflows str
+	strcat(buf, "day to you"); // Overflows buf
+}
+
+void modern_safe() {
+	char str[4];
+	char buf[10] = "fine";
+	strlcpy(str, "hello", sizeof(str)); // Fails
+	strlcat(buf, "day to you", sizeof(buf)); // Fails
+}
+```
+
+#### Example: Don't forget NUL terminator
+```c
+void never_factor_nul() {
+	char str[3];
+	strcpy(str, "bye"); // Write overflow
+	int x = strlen(str); // Read overflow
+}
+
+void factor_nul() {
+	char str[3];
+	strlcpy(str, "bye", 3); // Blocked
+	int x = strlen(str); // Returns 2
+}
+```
 
 #### Tools
 - GNU Debugger
