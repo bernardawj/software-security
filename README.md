@@ -287,6 +287,24 @@ $result = mysql_query("select * from Users
       - Limit privileges
       - Encrypt sensitive data
 
+### Session Hijacking
+- Session Cookies are **capabilities** that gives access to a site with the privilege of the user that has established that session
+  - Stealing that cookie will allow an attacker to impersonate a legitimate user
+
+#### Mitigation
+- Timeout session IDs and delete them once the session ends
+
+### Cross-site Request Forgery
+- Attacker can make requests as if the user has intended to make them
+- User will have "click a link" that is crafted by an attacker that accesses a vulnerable site
+
+#### Protections
+- Referrer
+  - This can determine whether if the site is legitimate and is by the company and not some gibberish site link
+- Secretized Links
+  - Include a secret in every link/form
+  - Cross compare the secret on the backend
+
 #### Tools
 - GNU Debugger
 ```shell
