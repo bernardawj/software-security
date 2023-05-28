@@ -216,6 +216,59 @@ void factor_nul() {
 	int x = strlen(str); // Returns 2
 }
 ```
+### Web
+- Server
+- Resources
+- HTTP Requests
+
+#### Server
+- Apache httpd
+- Nginx
+- IIS
+
+#### Resources
+- http://www.cs.umd.edu/~mwh/index.html
+  - http:// - The protocol or scheme
+  - www.cs.umd.edu/ - The hostname that will be translated by the DNS into IP address
+  - ~mwh/index.html - Path to a resource
+
+#### HTTP Requests
+1. Client (user) types in the URL in the browser and enters, this is a HTTP Request to the server
+2. Server takes the request with its headers and body and perform its backend processing and sends back a HTTP Response to the client
+
+### OWASP
+- SQL Injection
+- Cross-site Scripting (XSS)
+- Session Hijacking
+- Cross-site Request Forgery (CSRF)
+
+#### SQL
+- SQL consists of ACID transactions
+  - A - Atomicity
+    - Transactions either complete or not complete
+  - C - Consistency
+    - Data stored is always in a valid state
+  - I - Isolation
+    - Results from the transaction are not visible until persisted
+  - D - Durability
+    - Commited transactions persists, even when there is a power failure
+- DBMS
+  - Database Management Systems
+    - Applies the ACID transaction theories
+
+##### SQL Injection
+- Attack
+```php
+# Backend query in PHP lang
+$result = mysql_query("select * from Users
+					  where (name = '$user' and password = '$pass');");
+
+# Attackers can send in specific value to retrieve all user data
+# In the user field, type in `frank' or 1=1); --`
+# Basically, it is able to retrieve all values due to 1=1 and the `--` which comments the `and` condition
+$result = mysql_query("select * from Users
+					  where (name = 'frank' or 1=1); -- and password = '$pass');");
+```
 
 #### Tools
 - GNU Debugger
