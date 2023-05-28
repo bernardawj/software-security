@@ -118,6 +118,15 @@ p = &buf[5]
 - Accessing of pointers that has been de-referenced is a violation of temporal memory safety
 - Accessing of un-initialized pointers is another violation as well
 
+### Type Safety
+- Each object are defined with a data type
+  - e.g. `int p = 1` which is an integer, and not `int p = "hello"`
+- Operations on the object must always be compatible with the initial defined object's data type, so that it will not cause an error during run-time
+```c
+int p = 1;
+p = 5;
+```
+
 #### Tools
 - GNU Debugger
 ```shell
