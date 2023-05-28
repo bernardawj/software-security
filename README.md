@@ -131,11 +131,11 @@ p = 5;
 - Stack Smashing
 
 #### Stack Smashing
-Pasted image 20230528140717.png![image](https://github.com/bernardawj/software-security/assets/19328469/2150ed23-c031-4062-bbb6-800df8c3be07)
+![image](https://github.com/bernardawj/software-security/assets/19328469/2150ed23-c031-4062-bbb6-800df8c3be07)
 - We can detect `stack smashing` through the concept of `stack canary`
   - We can place a `stack canary` (something like a password salt) after the buffer, then cross-compare it if the values are the same
     - If attackers overrun the buffer, it will be replaced with values that are different from the initial salt
-    - Pasted image 20230528140735.png![image](https://github.com/bernardawj/software-security/assets/19328469/fd447e79-f78b-422f-9922-7b9ff67fc598)
+    - ![image](https://github.com/bernardawj/software-security/assets/19328469/fd447e79-f78b-422f-9922-7b9ff67fc598)
 
 
 #### Tools
