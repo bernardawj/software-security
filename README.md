@@ -127,6 +127,16 @@ int p = 1;
 p = 5;
 ```
 
+### Avoiding Exploitation
+- Stack Smashing
+
+#### Stack Smashing
+![[Pasted image 20230528140717.png]]
+- We can detect `stack smashing` through the concept of `stack canary`
+  - We can place a `stack canary` (something like a password salt) after the buffer, then cross-compare it if the values are the same
+    - If attackers overrun the buffer, it will be replaced with values that are different from the initial salt
+    - ![[Pasted image 20230528140739.png]]
+
 #### Tools
 - GNU Debugger
 ```shell
