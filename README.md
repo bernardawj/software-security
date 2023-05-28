@@ -85,6 +85,39 @@ void vulnerable() {
 }
 ```
 
+### Memory Safety
+- How to achieve?
+
+#### How to Achieve?
+- Using a pointer that "belongs" to that pointer
+- Create pointers through standard means
+```c
+p = malloc(...)
+
+p = &x
+
+p = &buf[5]
+```
+- Combines two ideas
+  - Temporal Safety
+  - Spatial Safety
+
+##### Spatial Safety
+- View pointers as triples (p, b, e)
+  - **p** is the actual pointer
+  - **b** is the base of the memory region it may access
+  - **e** is the extent (bounds) of that region
+- **Access allowed** if b <= p <= e - sizeof(typeof(p))
+  - Basically, you can think of it like an array;
+    - **b** is the start of the array (memory address)
+    - **e** is the end of the array (memory address)
+    - **p** is the pointer that points at the memory address within the array (from start to end of the memory address)
+
+##### Temporal Safety
+- Beware of dangling pointers
+- Accessing of pointers that has been de-referenced is a violation of temporal memory safety
+- Accessing of un-initialized pointers is another violation as well
+
 #### Tools
 - GNU Debugger
 ```shell
