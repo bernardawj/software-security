@@ -270,6 +270,23 @@ $result = mysql_query("select * from Users
 					  where (name = 'frank' or 1=1); -- and password = '$pass');");
 ```
 
+- Prevention
+  - Sanitization
+    - Deleting
+      - Delete the characters we don't want (e.g. `'`, `;`, and `--`)
+      - But values such as `Peter O'Connor` will be affected
+    - Escaping
+      - Replace problematic characters with safe ones
+      - e.g. `'` to `\'`
+    - Prepared Statements
+      - Treat user data according to its type
+      - ![[Pasted image 20230528212619.png]]
+      - ![[Pasted image 20230528212505.png]]
+    - Mitigation
+      - Perform input validation
+      - Limit privileges
+      - Encrypt sensitive data
+
 #### Tools
 - GNU Debugger
 ```shell
