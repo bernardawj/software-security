@@ -305,6 +305,134 @@ $result = mysql_query("select * from Users
   - Include a secret in every link/form
   - Cross compare the secret on the backend
 
+### Security Engineering
+- Phases
+- Software vs. Hardware
+
+#### Phases
+- Requirements
+  - Security Requirements
+  - Abuse Cases
+  - Architectural Risk Analysis
+- Design
+  - Architectural Risk Analysis
+  - Security-oriented Design
+- Implementation
+  - Security-oriented Design
+  - Code Review (with tools)
+- Testing/Assurance
+  - Risk-based Security Tests
+  - Penetration Testing
+
+#### Software vs. Hardware
+- Even though we are mostly focusing on software in this module, we should also factor in hardware during real scenarios
+- Software is **malleable** and easily changed
+  - Advantageous to core functionality as it can be changed easily
+  - However, it is **harmful to security and performance**
+- Hardware is **fast**, but hard to change
+  - Disadvantageous to evolution of product as it is hard to change
+  - However, it is **advantageous to security** as it is considered as immutable
+
+#### Threat Modelling
+- Visualizes possible attack scenarios
+  - Therefore, it must match with reality or the analysis will be wrong
+- Threat-driven Design
+  - Finding a good model
+    - Compare against similar systems
+    - Understand past attacks and attack patterns
+    - Challenge assumptions in the created design
+- Terminologies
+  - Direct Leak
+    - Refers to a situation where sensitive information is leaked to individuals during operation due to security misconfigurations
+  - Side Channel
+    - Refers to a situation where sensitive information is inferred due to unintended and indirect information
+- Gold Standard
+  - **Au**thentication
+    - What I know (e.g. Passwords)
+    - What I have (e.g. Smartphone)
+    - What I am (e.g. Biometrics)
+  - **Au**thorization
+    - Defines when a **principal** may perform an action
+      - e.g. Bob has access to his account but not Alice's account
+  - **Au**dit
+    - Retain enough information to be able to determine breach or misbehaviors
+      - Log files contains these information that should be protected from tampering or illegal accesses
+        - e.g. Account-related action that is logged
+
+##### Example: Network User
+- A network user can connect to the service via the network
+  - Can measure the size and timing of request and responses
+  - Can run parallel sessions
+  - Can provide malformed inputs or malformed messages
+  - Can drop or send extra messages
+- Possible attacks
+  - SQL Injection
+  - XSS
+  - CSRF
+  - Buffer overruns
+
+##### Example: Snooping User
+- A snooping user on the same network as other users of some service (e.g. someone who is connected to an unencrypted Wi-Fi in the public coffeeshop)
+  - Can read/measure other messages
+  - Can intercept, duplicate and modify messages
+- Possible attacks
+  - Session Hijacking
+  - Privacy-violating side-channel attack
+  - Denial of Service
+
+##### Example: Co-located User
+- Internet user on the same machine as other users of some service (e.g. malware installed on a user's laptop)
+  - Can read/write user files and memory
+  - Can snoop keypresses and other events
+  - Can erad/write user's display to spoof
+- Possible attack
+  - Password theft
+
+#### Design Defects
+- Flaws
+  - Problems in the **design**
+- Bugs
+  - Problems in the **implementation**
+
+##### Secure Software Design
+- **Design** software architecture according to good *principle* and *rules*
+- Design Categories
+  - Favor Simplicity
+    - Keep it so simple it is obviously correct
+    - Use fail-safe defaults
+      - Default key length that is secure (2048-bit RSA keys)
+      - No default passwords
+      - Whitelist valid objects, rather than blacklist invalid ones
+    - Do not expect expert users
+      - Consider mindset and abilities of system's users that will affect security
+        - Favor simple user interfaces
+  - Trust with Reluctance
+    - Improve security by reducing the need of trust
+      - Use **better design, better implementation process and not making unnecessary assumptions**
+    - Least privilege
+      - Give the system the least amount of privilege to perform an action
+    - Compartmentalization
+      - Isolate a system component to an isolated environment (e.g. sandbox) and reduce its privileges by making certain interactions impossible
+  - Defense in Depth
+    - Implement multiple layers of defense, akin to an onion.
+    - Even if one layer is breached, additional layers provide protection.
+    - Use community resources
+      - Hardened code that were built and tested by the community
+      - Vet designs publicly
+      - Keep up with the latest attacks
+
+#### Very Secure FTP Daemon
+- VSFTPD
+- Threat Model
+  - Clients are untrusted until authenticated
+  - Limited privileges after authentication
+  - Possible attack goals
+    - Steal or corrupt resources
+    - Remote code injection
+  - Circumstances
+    - Client attacks server
+    - Client attacks another client
+
 #### Tools
 - GNU Debugger
 ```shell
