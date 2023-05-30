@@ -433,6 +433,48 @@ $result = mysql_query("select * from Users
     - Client attacks server
     - Client attacks another client
 
+### Program Analysis
+- Static Analysis
+  - Analyzes program's code without running it
+  - Provides higher code coverage and certain guarantees based on analysis
+  - Detects code smells or bad coding practices, and incomplete libraries
+  - Design tradeoffs: precision, scalability, understandability
+  - Aims to model all possible program runs
+- Flow Analysis
+  - Tainted Flow Analysis
+    - Identifies risks such as unvalidated input, injection vulnerabilities, or insecure data handling
+    - Distinguishes between legal flows and illegal flows
+      - Legal flow: method can receive both tainted and untainted arguments
+      - Illegal flow: method not supposed to receive tainted arguments
+    - Can be performed using automated tools
+  - Other techniques:
+    - Context-Sensitive Analysis
+      - Analyzes program behavior considering the context of function calls
+    - Takes into account different call sites and their respective contexts
+    - Enables more precise analysis by capturing context-specific information
+    - Information Flow Analysis
+      - Deals with implicit flows where one value influences another
+      - Uses security labels or tags to represent sensitivity or security level
+
+### Symbolic Execution
+- Symbolic execution is a technique that lies between testing and static analysis
+- It explores different execution paths of a program using symbolic values instead of concrete inputs
+- Bugs reported during symbolic execution are real bugs in the program
+- However, each test execution explores only one possible path, limiting the coverage
+- Symbolic execution is effective in discovering complex bugs and path-specific vulnerabilities
+- It can help uncover input validation errors, boundary cases, and hard-to-reach code paths
+- Symbolic execution can also generate test cases that exercise specific program behaviors
+- It is commonly used in vulnerability analysis, software testing, and program verification
+
+#### Forking Execution
+- Symbolic executors can **fork** at branch points
+  - Happens when there are solutions to both the path condition and its negation
+
+#### KLEE
+- Executes LLVM bitcode symbolically
+  - LLVM: Compiles source file to .bc file
+  - KLEE: Runs the .bc file
+
 #### Tools
 - GNU Debugger
 ```shell
